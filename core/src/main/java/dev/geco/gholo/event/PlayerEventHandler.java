@@ -6,7 +6,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,21 +23,7 @@ public class PlayerEventHandler implements Listener {
 
     @EventHandler
     public void playerJoinEvent(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-
-        gHoloMain.getUpdateService().checkForUpdates(player);
-
-        gHoloMain.getTaskService().runDelayed(() -> {
-            gHoloMain.getHoloService().loadHolosForPlayer(player);
-
-            gHoloMain.getPacketHandler().setupPlayerPacketHandler(player);
-            gHoloMain.getInteractionService().loadInteractionsForPlayer(player);
-        }, false, player, 1);
-    }
-
-    @EventHandler
-    public void playerQuitEvent(PlayerQuitEvent event) {
-        gHoloMain.getTaskService().runDelayed(() -> gHoloMain.getHoloService().loadHolosForPlayer(event.getPlayer()), 1);
+         gHoloMain.getTaskService().runDelayed(() -> gHoloMain.getHoloService().loadHolosForPlayer(event.getPlayer()), 1);
     }
 
     @EventHandler
